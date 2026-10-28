@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<style>body{background-color:white;}</style>
+
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>宠物保险年度报价</title>
+  <style>:root { color-scheme: light; --ink: #203442; --blue: #315d79; --muted: #536570; }
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); background: #f3f5f6; font-family: -apple-system, BlinkMacSystemFont, "Microsoft YaHei", "PingFang SC", sans-serif; font-size: 16px; line-height: 1.65; }
+.page { max-width: 1200px; margin: auto; padding: 38px 24px 24px; }
+header { margin-bottom: 26px; }
+.eyebrow { color: var(--blue); font-size: 14px; letter-spacing: .06em; margin: 0 0 7px; }
+h1 { font-size: 30px; line-height: 1.35; margin: 0 0 10px; }
+header > p:last-child { color: var(--muted); margin: 0; }
+.layout { display: grid; grid-template-columns: 335px minmax(0, 1fr); gap: 24px; align-items: start; }
+.panel { background: #fff; border: 1px solid #d9e1e5; border-radius: 12px; padding: 26px; min-width: 0; }
+h2 { font-size: 21px; margin: 0 0 22px; } h3 { font-size: 17px; margin: 26px 0 8px; }
+label, legend { font-weight: 600; font-size: 15px; }
+label:not(.choice) { display: block; margin: 18px 0 7px; }
+select, input[type=number] { width: 100%; min-height: 45px; border: 1px solid #afbec7; border-radius: 6px; padding: 9px 10px; color: var(--ink); font: inherit; background: #fff; }
+input:focus-visible, select:focus-visible { outline: 3px solid #a6c7dd; outline-offset: 2px; }
+.field-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+fieldset { border: 0; padding: 0; margin: 26px 0 0; } legend { margin-bottom: 11px; }
+.base-cover { padding: 10px 0; } .base-cover span { color: var(--muted); margin-left: 8px; font-size: 13px; }
+.choice { display: flex; align-items: center; gap: 9px; padding: 10px 0; font-weight: 400; cursor: pointer; }
+input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--blue); }
+.total { padding: 20px 22px; background: #eaf0f4; border-radius: 8px; display: flex; flex-direction: column; gap: 4px; margin-bottom: 24px; }
+.total span { font-size: 15px; color: var(--muted); } .total strong { color: var(--blue); font-size: 34px; font-variant-numeric: tabular-nums; line-height: 1.4; }
+.table-scroll { overflow-x: auto; } table { border-collapse: collapse; width: 100%; min-width: 540px; font-size: 14px; font-variant-numeric: tabular-nums; }
+caption { text-align: left; color: var(--muted); font-size: 14px; margin-bottom: 10px; }
+th, td { padding: 13px 9px; border-bottom: 1px solid #e1e6e9; text-align: right; white-space: nowrap; }
+th:first-child { text-align: left; } thead th { color: var(--muted); font-weight: 500; } tbody th { font-weight: 500; }
+tfoot th, tfoot td { border-top: 2px solid #b8c8d1; border-bottom: 0; font-weight: 700; }
+ul { margin: 0 0 18px; padding-left: 22px; } li { margin: 5px 0; }
+.help { font-size: 13px; line-height: 1.7; color: var(--muted); margin: 9px 0; } .error { color: #a02626; font-size: 14px; }
+footer { color: var(--muted); font-size: 13px; margin-top: 24px; text-align: center; }
+@media (max-width: 870px) { .layout { grid-template-columns: 1fr; } .page { max-width: 760px; padding: 25px 16px; } }
+@media (max-width: 440px) { .panel { padding: 20px 16px; } h1 { font-size: 26px; } .total strong { font-size: 30px; } }
+@media print { body { background: #fff; } .page { padding: 0; } .layout { grid-template-columns: 1fr; } .panel { break-inside: avoid; } }</style>
+</head>
+<html lang="zh-CN">
+  <body>
+    <main class="page">
+  <header>
+    <p class="eyebrow">一年期宠物保险 · 印度卢比 INR</p>
+    <h1>为宠物选择年度保障</h1>
+    <p>选择宠物资料与保障，查看各项年度价格。</p>
+  </header>
+  <div class="layout">
+    <form id="quote-form" class="panel" autocomplete="off">
+      <h2>宠物与保障</h2>
+      <label for="breed">犬种</label><select id="breed" name="breed"></select>
+      <div class="field-pair">
+        <div><label for="age">年龄（岁）</label><input id="age" name="age" type="number" step="0.01" value="4" required><p id="age-help" class="help"></p></div>
+        <div><label for="gender">性别</label><select id="gender" name="gender"><option value="F">雌性</option><option value="M">雄性</option></select></div>
+      </div>
+      <label for="share">费用分担</label><select id="share" name="share"></select>
+      <fieldset><legend>保障选择</legend>
+        <div class="base-cover">医疗责任 <span>基础保障</span></div>
+        <label class="choice"><input id="third-party" type="checkbox" checked>第三者责任</label>
+        <label class="choice"><input id="mortality" type="checkbox" checked>意外死亡责任</label>
+      </fieldset>
+      <p id="input-error" class="error" role="alert" hidden>请输入支持范围内的年龄。</p>
+    </form>
+    <section class="panel results" aria-labelledby="results-title">
+      <h2 id="results-title">年度保费</h2>
+      <div class="total"><span>建议零售价合计</span><strong id="annual-total" aria-live="polite"></strong></div>
+      <div class="table-scroll"><table id="price-table">
+        <caption>表1 各保障年度价格（INR）</caption>
+        <thead><tr><th scope="col">保障</th><th scope="col">纯保费</th><th scope="col">费用附加</th><th scope="col">安全边际</th><th scope="col">建议零售价</th></tr></thead>
+        <tbody></tbody><tfoot></tfoot>
+      </table></div>
+      <h3>保障金额</h3><ul id="limits"></ul>
+      <p class="help">住院与手术合并为医疗责任。第三者费用分担参与定价；医疗价格使用两种分担方式的组合经验。</p>
+      <p id="pricing-note" class="help"></p>
+      <p id="age-note" class="help"></p>
+    </section>
+  </div>
+  <footer>合成教学数据估计 · 课程案例技术价格 · 页面可离线使用</footer>
+</main>
+    <script id="model-data" type="application/json">{"cases":[{"breed":"Beagle","gender":"F","share":"deductible","curves":{"Medical":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.50493593166249,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":-2.50493593166249},"severity":{"nodes":[0.15,8.98],"coefficients":[[9.94628569620637,0.022616750756043,0,0]],"lower_slope":0.022616750756043,"upper_slope":0.022616750756043,"upper_value":10.1459916053822}},"ThirdParty":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-3.1671829255736,-0.0876538906912366,0,0]],"lower_slope":-0.0876538906912366,"upper_slope":-0.0876538906912366,"upper_value":-3.94116678037721},"severity":{"nodes":[0.15,8.98],"coefficients":[[11.3176182836003,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":11.3176182836003}},"Mortality":{"frequency":{"nodes":[0.17,4.67,6.62,8.98],"coefficients":[[-4.94671818296469,0.462007611076151,0,-0.00550231756784586],[-3.36908262149196,0.127741818829515,-0.0742812871659191,0.0171054014217036],[-3.27560625585606,0.0331746656005147,0.025785311151047,-0.00364199310043037]],"lower_slope":0.462007611076151,"upper_slope":0.0940279999169857,"upper_value":-3.10157146571427},"severity":null}}},{"breed":"Beagle","gender":"F","share":"copay","curves":{"Medical":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.50493593166249,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":-2.50493593166249},"severity":{"nodes":[0.15,8.98],"coefficients":[[9.94628569620637,0.022616750756043,0,0]],"lower_slope":0.022616750756043,"upper_slope":0.022616750756043,"upper_value":10.1459916053822}},"ThirdParty":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-3.1671829255736,-0.0876538906912366,0,0]],"lower_slope":-0.0876538906912366,"upper_slope":-0.0876538906912366,"upper_value":-3.94116678037721},"severity":{"nodes":[0.15,8.98],"coefficients":[[11.221747480126,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":11.221747480126}},"Mortality":{"frequency":{"nodes":[0.17,4.67,6.62,8.98],"coefficients":[[-4.94671818296469,0.462007611076151,0,-0.00550231756784586],[-3.36908262149196,0.127741818829515,-0.0742812871659191,0.0171054014217036],[-3.27560625585606,0.0331746656005147,0.025785311151047,-0.00364199310043037]],"lower_slope":0.462007611076151,"upper_slope":0.0940279999169857,"upper_value":-3.10157146571427},"severity":null}}},{"breed":"Beagle","gender":"M","share":"deductible","curves":{"Medical":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.50493593166249,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":-2.50493593166249},"severity":{"nodes":[0.15,8.98],"coefficients":[[9.94628569620637,0.022616750756043,0,0]],"lower_slope":0.022616750756043,"upper_slope":0.022616750756043,"upper_value":10.1459916053822}},"ThirdParty":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-3.1671829255736,-0.0876538906912366,0,0]],"lower_slope":-0.0876538906912366,"upper_slope":-0.0876538906912366,"upper_value":-3.94116678037721},"severity":{"nodes":[0.15,8.98],"coefficients":[[11.3176182836003,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":11.3176182836003}},"Mortality":{"frequency":{"nodes":[0.17,4.67,6.62,8.98],"coefficients":[[-4.75465429798865,0.462007611076151,0,-0.00550231756784586],[-3.17701873651593,0.127741818829515,-0.0742812871659191,0.0171054014217036],[-3.08354237088003,0.0331746656005147,0.025785311151047,-0.00364199310043037]],"lower_slope":0.462007611076151,"upper_slope":0.0940279999169857,"upper_value":-2.90950758073823},"severity":null}}},{"breed":"Beagle","gender":"M","share":"copay","curves":{"Medical":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.50493593166249,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":-2.50493593166249},"severity":{"nodes":[0.15,8.98],"coefficients":[[9.94628569620637,0.022616750756043,0,0]],"lower_slope":0.022616750756043,"upper_slope":0.022616750756043,"upper_value":10.1459916053822}},"ThirdParty":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-3.1671829255736,-0.0876538906912366,0,0]],"lower_slope":-0.0876538906912366,"upper_slope":-0.0876538906912366,"upper_value":-3.94116678037721},"severity":{"nodes":[0.15,8.98],"coefficients":[[11.221747480126,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":11.221747480126}},"Mortality":{"frequency":{"nodes":[0.17,4.67,6.62,8.98],"coefficients":[[-4.75465429798865,0.462007611076151,0,-0.00550231756784586],[-3.17701873651593,0.127741818829515,-0.0742812871659191,0.0171054014217036],[-3.08354237088003,0.0331746656005147,0.025785311151047,-0.00364199310043037]],"lower_slope":0.462007611076151,"upper_slope":0.0940279999169857,"upper_value":-2.90950758073823},"severity":null}}},{"breed":"Bulldog","gender":"F","share":"deductible","curves":{"Medical":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.63404101611053,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":-2.63404101611053},"severity":{"nodes":[0.15,8.98],"coefficients":[[9.94628569620637,0.022616750756043,0,0]],"lower_slope":0.022616750756043,"upper_slope":0.022616750756043,"upper_value":10.1459916053822}},"ThirdParty":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.77516448110518,-0.0876538906912366,0,0]],"lower_slope":-0.0876538906912366,"upper_slope":-0.0876538906912366,"upper_value":-3.5491483359088},"severity":{"nodes":[0.15,8.98],"coefficients":[[12.0746707054992,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":12.0746707054992}},"Mortality":{"frequency":{"nodes":[0.17,4.67,6.62,8.98],"coefficients":[[-4.94671818296469,0.462007611076151,0,-0.00550231756784586],[-3.36908262149196,0.127741818829515,-0.0742812871659191,0.0171054014217036],[-3.27560625585606,0.0331746656005147,0.025785311151047,-0.00364199310043037]],"lower_slope":0.462007611076151,"upper_slope":0.0940279999169857,"upper_value":-3.10157146571427},"severity":null}}},{"breed":"Bulldog","gender":"F","share":"copay","curves":{"Medical":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.63404101611053,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":-2.63404101611053},"severity":{"nodes":[0.15,8.98],"coefficients":[[9.94628569620637,0.022616750756043,0,0]],"lower_slope":0.022616750756043,"upper_slope":0.022616750756043,"upper_value":10.1459916053822}},"ThirdParty":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.77516448110518,-0.0876538906912366,0,0]],"lower_slope":-0.0876538906912366,"upper_slope":-0.0876538906912366,"upper_value":-3.5491483359088},"severity":{"nodes":[0.15,8.98],"coefficients":[[11.9787999020249,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":11.9787999020249}},"Mortality":{"frequency":{"nodes":[0.17,4.67,6.62,8.98],"coefficients":[[-4.94671818296469,0.462007611076151,0,-0.00550231756784586],[-3.36908262149196,0.127741818829515,-0.0742812871659191,0.0171054014217036],[-3.27560625585606,0.0331746656005147,0.025785311151047,-0.00364199310043037]],"lower_slope":0.462007611076151,"upper_slope":0.0940279999169857,"upper_value":-3.10157146571427},"severity":null}}},{"breed":"Bulldog","gender":"M","share":"deductible","curves":{"Medical":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.63404101611053,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":-2.63404101611053},"severity":{"nodes":[0.15,8.98],"coefficients":[[9.94628569620637,0.022616750756043,0,0]],"lower_slope":0.022616750756043,"upper_slope":0.022616750756043,"upper_value":10.1459916053822}},"ThirdParty":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.77516448110518,-0.0876538906912366,0,0]],"lower_slope":-0.0876538906912366,"upper_slope":-0.0876538906912366,"upper_value":-3.5491483359088},"severity":{"nodes":[0.15,8.98],"coefficients":[[12.0746707054992,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":12.0746707054992}},"Mortality":{"frequency":{"nodes":[0.17,4.67,6.62,8.98],"coefficients":[[-4.75465429798865,0.462007611076151,0,-0.00550231756784586],[-3.17701873651593,0.127741818829515,-0.0742812871659191,0.0171054014217036],[-3.08354237088003,0.0331746656005147,0.025785311151047,-0.00364199310043037]],"lower_slope":0.462007611076151,"upper_slope":0.0940279999169857,"upper_value":-2.90950758073823},"severity":null}}},{"breed":"Bulldog","gender":"M","share":"copay","curves":{"Medical":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.63404101611053,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":-2.63404101611053},"severity":{"nodes":[0.15,8.98],"coefficients":[[9.94628569620637,0.022616750756043,0,0]],"lower_slope":0.022616750756043,"upper_slope":0.022616750756043,"upper_value":10.1459916053822}},"ThirdParty":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.77516448110518,-0.0876538906912366,0,0]],"lower_slope":-0.0876538906912366,"upper_slope":-0.0876538906912366,"upper_value":-3.5491483359088},"severity":{"nodes":[0.15,8.98],"coefficients":[[11.9787999020249,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":11.9787999020249}},"Mortality":{"frequency":{"nodes":[0.17,4.67,6.62,8.98],"coefficients":[[-4.75465429798865,0.462007611076151,0,-0.00550231756784586],[-3.17701873651593,0.127741818829515,-0.0742812871659191,0.0171054014217036],[-3.08354237088003,0.0331746656005147,0.025785311151047,-0.00364199310043037]],"lower_slope":0.462007611076151,"upper_slope":0.0940279999169857,"upper_value":-2.90950758073823},"severity":null}}},{"breed":"German Shepherd","gender":"F","share":"deductible","curves":{"Medical":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.63961334853315,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":-2.63961334853315},"severity":{"nodes":[0.15,8.98],"coefficients":[[9.94628569620637,0.022616750756043,0,0]],"lower_slope":0.022616750756043,"upper_slope":0.022616750756043,"upper_value":10.1459916053822}},"ThirdParty":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.89427110392828,-0.0876538906912366,0,0]],"lower_slope":-0.0876538906912366,"upper_slope":-0.0876538906912366,"upper_value":-3.6682549587319},"severity":{"nodes":[0.15,8.98],"coefficients":[[11.9561460258423,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":11.9561460258423}},"Mortality":{"frequency":{"nodes":[0.17,4.67,6.62,8.98],"coefficients":[[-4.94671818296469,0.462007611076151,0,-0.00550231756784586],[-3.36908262149196,0.127741818829515,-0.0742812871659191,0.0171054014217036],[-3.27560625585606,0.0331746656005147,0.025785311151047,-0.00364199310043037]],"lower_slope":0.462007611076151,"upper_slope":0.0940279999169857,"upper_value":-3.10157146571427},"severity":null}}},{"breed":"German Shepherd","gender":"F","share":"copay","curves":{"Medical":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.63961334853315,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":-2.63961334853315},"severity":{"nodes":[0.15,8.98],"coefficients":[[9.94628569620637,0.022616750756043,0,0]],"lower_slope":0.022616750756043,"upper_slope":0.022616750756043,"upper_value":10.1459916053822}},"ThirdParty":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.89427110392828,-0.0876538906912366,0,0]],"lower_slope":-0.0876538906912366,"upper_slope":-0.0876538906912366,"upper_value":-3.6682549587319},"severity":{"nodes":[0.15,8.98],"coefficients":[[11.860275222368,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":11.860275222368}},"Mortality":{"frequency":{"nodes":[0.17,4.67,6.62,8.98],"coefficients":[[-4.94671818296469,0.462007611076151,0,-0.00550231756784586],[-3.36908262149196,0.127741818829515,-0.0742812871659191,0.0171054014217036],[-3.27560625585606,0.0331746656005147,0.025785311151047,-0.00364199310043037]],"lower_slope":0.462007611076151,"upper_slope":0.0940279999169857,"upper_value":-3.10157146571427},"severity":null}}},{"breed":"German Shepherd","gender":"M","share":"deductible","curves":{"Medical":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.63961334853315,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":-2.63961334853315},"severity":{"nodes":[0.15,8.98],"coefficients":[[9.94628569620637,0.022616750756043,0,0]],"lower_slope":0.022616750756043,"upper_slope":0.022616750756043,"upper_value":10.1459916053822}},"ThirdParty":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.89427110392828,-0.0876538906912366,0,0]],"lower_slope":-0.0876538906912366,"upper_slope":-0.0876538906912366,"upper_value":-3.6682549587319},"severity":{"nodes":[0.15,8.98],"coefficients":[[11.9561460258423,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":11.9561460258423}},"Mortality":{"frequency":{"nodes":[0.17,4.67,6.62,8.98],"coefficients":[[-4.75465429798865,0.462007611076151,0,-0.00550231756784586],[-3.17701873651593,0.127741818829515,-0.0742812871659191,0.0171054014217036],[-3.08354237088003,0.0331746656005147,0.025785311151047,-0.00364199310043037]],"lower_slope":0.462007611076151,"upper_slope":0.0940279999169857,"upper_value":-2.90950758073823},"severity":null}}},{"breed":"German Shepherd","gender":"M","share":"copay","curves":{"Medical":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.63961334853315,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":-2.63961334853315},"severity":{"nodes":[0.15,8.98],"coefficients":[[9.94628569620637,0.022616750756043,0,0]],"lower_slope":0.022616750756043,"upper_slope":0.022616750756043,"upper_value":10.1459916053822}},"ThirdParty":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.89427110392828,-0.0876538906912366,0,0]],"lower_slope":-0.0876538906912366,"upper_slope":-0.0876538906912366,"upper_value":-3.6682549587319},"severity":{"nodes":[0.15,8.98],"coefficients":[[11.860275222368,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":11.860275222368}},"Mortality":{"frequency":{"nodes":[0.17,4.67,6.62,8.98],"coefficients":[[-4.75465429798865,0.462007611076151,0,-0.00550231756784586],[-3.17701873651593,0.127741818829515,-0.0742812871659191,0.0171054014217036],[-3.08354237088003,0.0331746656005147,0.025785311151047,-0.00364199310043037]],"lower_slope":0.462007611076151,"upper_slope":0.0940279999169857,"upper_value":-2.90950758073823},"severity":null}}},{"breed":"Labrador","gender":"F","share":"deductible","curves":{"Medical":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.61327903811408,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":-2.61327903811408},"severity":{"nodes":[0.15,8.98],"coefficients":[[9.94628569620637,0.022616750756043,0,0]],"lower_slope":0.022616750756043,"upper_slope":0.022616750756043,"upper_value":10.1459916053822}},"ThirdParty":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-3.0258753981683,-0.0876538906912366,0,0]],"lower_slope":-0.0876538906912366,"upper_slope":-0.0876538906912366,"upper_value":-3.79985925297192},"severity":{"nodes":[0.15,8.98],"coefficients":[[11.5783529433797,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":11.5783529433797}},"Mortality":{"frequency":{"nodes":[0.17,4.67,6.62,8.98],"coefficients":[[-4.94671818296469,0.462007611076151,0,-0.00550231756784586],[-3.36908262149196,0.127741818829515,-0.0742812871659191,0.0171054014217036],[-3.27560625585606,0.0331746656005147,0.025785311151047,-0.00364199310043037]],"lower_slope":0.462007611076151,"upper_slope":0.0940279999169857,"upper_value":-3.10157146571427},"severity":null}}},{"breed":"Labrador","gender":"F","share":"copay","curves":{"Medical":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.61327903811408,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":-2.61327903811408},"severity":{"nodes":[0.15,8.98],"coefficients":[[9.94628569620637,0.022616750756043,0,0]],"lower_slope":0.022616750756043,"upper_slope":0.022616750756043,"upper_value":10.1459916053822}},"ThirdParty":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-3.0258753981683,-0.0876538906912366,0,0]],"lower_slope":-0.0876538906912366,"upper_slope":-0.0876538906912366,"upper_value":-3.79985925297192},"severity":{"nodes":[0.15,8.98],"coefficients":[[11.4824821399054,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":11.4824821399054}},"Mortality":{"frequency":{"nodes":[0.17,4.67,6.62,8.98],"coefficients":[[-4.94671818296469,0.462007611076151,0,-0.00550231756784586],[-3.36908262149196,0.127741818829515,-0.0742812871659191,0.0171054014217036],[-3.27560625585606,0.0331746656005147,0.025785311151047,-0.00364199310043037]],"lower_slope":0.462007611076151,"upper_slope":0.0940279999169857,"upper_value":-3.10157146571427},"severity":null}}},{"breed":"Labrador","gender":"M","share":"deductible","curves":{"Medical":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.61327903811408,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":-2.61327903811408},"severity":{"nodes":[0.15,8.98],"coefficients":[[9.94628569620637,0.022616750756043,0,0]],"lower_slope":0.022616750756043,"upper_slope":0.022616750756043,"upper_value":10.1459916053822}},"ThirdParty":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-3.0258753981683,-0.0876538906912366,0,0]],"lower_slope":-0.0876538906912366,"upper_slope":-0.0876538906912366,"upper_value":-3.79985925297192},"severity":{"nodes":[0.15,8.98],"coefficients":[[11.5783529433797,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":11.5783529433797}},"Mortality":{"frequency":{"nodes":[0.17,4.67,6.62,8.98],"coefficients":[[-4.75465429798865,0.462007611076151,0,-0.00550231756784586],[-3.17701873651593,0.127741818829515,-0.0742812871659191,0.0171054014217036],[-3.08354237088003,0.0331746656005147,0.025785311151047,-0.00364199310043037]],"lower_slope":0.462007611076151,"upper_slope":0.0940279999169857,"upper_value":-2.90950758073823},"severity":null}}},{"breed":"Labrador","gender":"M","share":"copay","curves":{"Medical":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.61327903811408,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":-2.61327903811408},"severity":{"nodes":[0.15,8.98],"coefficients":[[9.94628569620637,0.022616750756043,0,0]],"lower_slope":0.022616750756043,"upper_slope":0.022616750756043,"upper_value":10.1459916053822}},"ThirdParty":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-3.0258753981683,-0.0876538906912366,0,0]],"lower_slope":-0.0876538906912366,"upper_slope":-0.0876538906912366,"upper_value":-3.79985925297192},"severity":{"nodes":[0.15,8.98],"coefficients":[[11.4824821399054,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":11.4824821399054}},"Mortality":{"frequency":{"nodes":[0.17,4.67,6.62,8.98],"coefficients":[[-4.75465429798865,0.462007611076151,0,-0.00550231756784586],[-3.17701873651593,0.127741818829515,-0.0742812871659191,0.0171054014217036],[-3.08354237088003,0.0331746656005147,0.025785311151047,-0.00364199310043037]],"lower_slope":0.462007611076151,"upper_slope":0.0940279999169857,"upper_value":-2.90950758073823},"severity":null}}},{"breed":"Pug","gender":"F","share":"deductible","curves":{"Medical":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.6295641882627,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":-2.6295641882627},"severity":{"nodes":[0.15,8.98],"coefficients":[[9.94628569620637,0.022616750756043,0,0]],"lower_slope":0.022616750756043,"upper_slope":0.022616750756043,"upper_value":10.1459916053822}},"ThirdParty":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.81420926137271,-0.0876538906912366,0,0]],"lower_slope":-0.0876538906912366,"upper_slope":-0.0876538906912366,"upper_value":-3.58819311617633},"severity":{"nodes":[0.15,8.98],"coefficients":[[12.1542222158159,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":12.1542222158159}},"Mortality":{"frequency":{"nodes":[0.17,4.67,6.62,8.98],"coefficients":[[-4.94671818296469,0.462007611076151,0,-0.00550231756784586],[-3.36908262149196,0.127741818829515,-0.0742812871659191,0.0171054014217036],[-3.27560625585606,0.0331746656005147,0.025785311151047,-0.00364199310043037]],"lower_slope":0.462007611076151,"upper_slope":0.0940279999169857,"upper_value":-3.10157146571427},"severity":null}}},{"breed":"Pug","gender":"F","share":"copay","curves":{"Medical":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.6295641882627,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":-2.6295641882627},"severity":{"nodes":[0.15,8.98],"coefficients":[[9.94628569620637,0.022616750756043,0,0]],"lower_slope":0.022616750756043,"upper_slope":0.022616750756043,"upper_value":10.1459916053822}},"ThirdParty":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.81420926137271,-0.0876538906912366,0,0]],"lower_slope":-0.0876538906912366,"upper_slope":-0.0876538906912366,"upper_value":-3.58819311617633},"severity":{"nodes":[0.15,8.98],"coefficients":[[12.0583514123416,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":12.0583514123416}},"Mortality":{"frequency":{"nodes":[0.17,4.67,6.62,8.98],"coefficients":[[-4.94671818296469,0.462007611076151,0,-0.00550231756784586],[-3.36908262149196,0.127741818829515,-0.0742812871659191,0.0171054014217036],[-3.27560625585606,0.0331746656005147,0.025785311151047,-0.00364199310043037]],"lower_slope":0.462007611076151,"upper_slope":0.0940279999169857,"upper_value":-3.10157146571427},"severity":null}}},{"breed":"Pug","gender":"M","share":"deductible","curves":{"Medical":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.6295641882627,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":-2.6295641882627},"severity":{"nodes":[0.15,8.98],"coefficients":[[9.94628569620637,0.022616750756043,0,0]],"lower_slope":0.022616750756043,"upper_slope":0.022616750756043,"upper_value":10.1459916053822}},"ThirdParty":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.81420926137271,-0.0876538906912366,0,0]],"lower_slope":-0.0876538906912366,"upper_slope":-0.0876538906912366,"upper_value":-3.58819311617633},"severity":{"nodes":[0.15,8.98],"coefficients":[[12.1542222158159,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":12.1542222158159}},"Mortality":{"frequency":{"nodes":[0.17,4.67,6.62,8.98],"coefficients":[[-4.75465429798865,0.462007611076151,0,-0.00550231756784586],[-3.17701873651593,0.127741818829515,-0.0742812871659191,0.0171054014217036],[-3.08354237088003,0.0331746656005147,0.025785311151047,-0.00364199310043037]],"lower_slope":0.462007611076151,"upper_slope":0.0940279999169857,"upper_value":-2.90950758073823},"severity":null}}},{"breed":"Pug","gender":"M","share":"copay","curves":{"Medical":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.6295641882627,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":-2.6295641882627},"severity":{"nodes":[0.15,8.98],"coefficients":[[9.94628569620637,0.022616750756043,0,0]],"lower_slope":0.022616750756043,"upper_slope":0.022616750756043,"upper_value":10.1459916053822}},"ThirdParty":{"frequency":{"nodes":[0.15,8.98],"coefficients":[[-2.81420926137271,-0.0876538906912366,0,0]],"lower_slope":-0.0876538906912366,"upper_slope":-0.0876538906912366,"upper_value":-3.58819311617633},"severity":{"nodes":[0.15,8.98],"coefficients":[[12.0583514123416,0,0,0]],"lower_slope":0,"upper_slope":0,"upper_value":12.0583514123416}},"Mortality":{"frequency":{"nodes":[0.17,4.67,6.62,8.98],"coefficients":[[-4.75465429798865,0.462007611076151,0,-0.00550231756784586],[-3.17701873651593,0.127741818829515,-0.0742812871659191,0.0171054014217036],[-3.08354237088003,0.0331746656005147,0.025785311151047,-0.00364199310043037]],"lower_slope":0.462007611076151,"upper_slope":0.0940279999169857,"upper_value":-2.90950758073823},"severity":null}}}],"levels":{"breed":["Beagle","Bulldog","German Shepherd","Labrador","Pug"],"gender":["F","M"],"share":["deductible","copay"]},"age_range":[0.15,8.98],"settings":{"pricing_year":2025,"tp_reference":500000,"expense_rate":0.25,"safety_rate":0.075},"terms":{"medical_limit":50000,"deductible":2500,"copay":0.1},"mortality_si":{"German Shepherd":45000,"Pug":42000,"Beagle":35000,"Labrador":40000,"Bulldog":43000},"inflation":{"Medical":0.0373215050830586,"ThirdParty":0.0559470263953377,"Mortality":0},"balancing":{"Medical":0.999630653019214,"ThirdParty":0.997059651107993,"Mortality":1.00571781401503}}</script>
+    <script>"use strict";
+
+const pricingModel = JSON.parse(document.getElementById("model-data").textContent);
+const coverageLabels = { Medical: "医疗责任", ThirdParty: "第三者责任", Mortality: "意外死亡责任" };
+const breedLabels = { Beagle: "比格犬（Beagle）", Bulldog: "斗牛犬（Bulldog）", "German Shepherd": "德国牧羊犬（German Shepherd）", Labrador: "拉布拉多犬（Labrador）", Pug: "巴哥犬（Pug）" };
+const money = value => new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
+
+function logPredictor(curve, age) {
+  const nodes = curve.nodes;
+  const last = nodes.length - 1;
+  if (age < nodes[0]) return curve.coefficients[0][0] + curve.lower_slope * (age - nodes[0]);
+  if (age >= nodes[last]) return curve.upper_value + curve.upper_slope * (age - nodes[last]);
+  let i = 0;
+  while (age >= nodes[i + 1]) i += 1;
+  const z = age - nodes[i];
+  const c = curve.coefficients[i];
+  return c[0] + z * (c[1] + z * (c[2] + z * c[3]));
+}
+
+function quotePet(breed, age, gender, selected, share) {
+  if (!Number.isFinite(age) || age < pricingModel.age_range[0] || age > pricingModel.age_range[1]) throw new RangeError("年龄超出报价范围");
+  const condition = pricingModel.cases.find(row => row.breed === breed && row.gender === gender && row.share === share);
+  if (!condition) throw new RangeError("投保条件不在模型支持范围内");
+  return selected.map(coverage => {
+    const curves = condition.curves[coverage];
+    let frequency = Math.exp(logPredictor(curves.frequency, age));
+    let severity;
+    if (coverage === "Mortality") {
+      frequency *= pricingModel.balancing[coverage];
+      severity = pricingModel.mortality_si[breed];
+    } else {
+      severity = Math.exp(logPredictor(curves.severity, age)) * pricingModel.balancing[coverage];
+    }
+    const pure_premium = frequency * severity;
+    const gross_premium = pure_premium / (1 - pricingModel.settings.expense_rate - pricingModel.settings.safety_rate);
+    return { coverage, frequency, severity, pure_premium, expense_loading: gross_premium * pricingModel.settings.expense_rate,
+      safety_margin: gross_premium * pricingModel.settings.safety_rate, gross_premium };
+  });
+}
+
+function tableRow(label, values) {
+  const row = document.createElement("tr");
+  const heading = document.createElement("th");
+  heading.scope = "row";
+  heading.textContent = label;
+  row.append(heading);
+  for (const value of values) {
+    const cell = document.createElement("td");
+    cell.textContent = money(value);
+    row.append(cell);
+  }
+  return row;
+}
+
+function updateQuote() {
+  const ageField = document.getElementById("age");
+  const age = ageField.valueAsNumber;
+  const invalid = !ageField.validity.valid || !Number.isFinite(age);
+  document.getElementById("input-error").hidden = !invalid;
+  document.querySelector(".results").hidden = invalid;
+  if (invalid) return;
+  const breed = document.getElementById("breed").value;
+  const selected = ["Medical"];
+  if (document.getElementById("third-party").checked) selected.push("ThirdParty");
+  if (document.getElementById("mortality").checked) selected.push("Mortality");
+  const prices = quotePet(breed, age, document.getElementById("gender").value, selected, document.getElementById("share").value);
+  const columns = ["pure_premium", "expense_loading", "safety_margin", "gross_premium"];
+  document.querySelector("#price-table tbody").replaceChildren(...prices.map(row => tableRow(coverageLabels[row.coverage], columns.map(key => row[key]))));
+  const totals = columns.map(key => prices.reduce((sum, row) => sum + row[key], 0));
+  document.querySelector("#price-table tfoot").replaceChildren(tableRow("合计", totals));
+  document.getElementById("annual-total").textContent = "INR " + money(totals[3]);
+  const limits = ["医疗责任：每笔限额 INR " + money(pricingModel.terms.medical_limit)];
+  if (selected.includes("ThirdParty")) limits.push("第三者责任：每笔限额 INR " + money(pricingModel.settings.tp_reference));
+  if (selected.includes("Mortality")) limits.push("意外死亡保险金：INR " + money(pricingModel.mortality_si[breed]));
+  document.getElementById("limits").replaceChildren(...limits.map(text => {
+    const item = document.createElement("li"); item.textContent = text; return item;
+  }));
+}
+
+const breedSelect = document.getElementById("breed");
+for (const breed of pricingModel.levels.breed) breedSelect.add(new Option(breedLabels[breed], breed));
+breedSelect.value = "Beagle";
+const shareSelect = document.getElementById("share");
+shareSelect.add(new Option("每次固定免赔 INR " + money(pricingModel.terms.deductible), "deductible"));
+shareSelect.add(new Option("每次共付 " + (100 * pricingModel.terms.copay) + "%", "copay"));
+const ageInput = document.getElementById("age");
+ageInput.min = pricingModel.age_range[0];
+ageInput.max = pricingModel.age_range[1];
+document.getElementById("age-help").textContent = pricingModel.age_range.join("—") + "岁";
+document.getElementById("pricing-note").textContent = "价格基准：" + pricingModel.settings.pricing_year + "年7月1日。费用附加为最终保费的" + (100 * pricingModel.settings.expense_rate) + "%；安全边际为最终保费的" + (100 * pricingModel.settings.safety_rate) + "%。金额保留两位小数，合计使用未取舍金额。";
+document.getElementById("age-note").textContent = "第三者样本最低年龄0.19岁，死亡样本最低年龄0.17岁；低于相应年龄的报价涉及小幅外推。";
+document.getElementById("quote-form").addEventListener("input", updateQuote);
+document.getElementById("quote-form").addEventListener("change", updateQuote);
+document.getElementById("quote-form").addEventListener("submit", event => event.preventDefault());
+updateQuote();</script>
+  </body>
+</html>
+</html>
